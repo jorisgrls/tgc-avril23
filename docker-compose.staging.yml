@@ -37,15 +37,6 @@ services:
     environment:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
 
-  fileuploadservice-staging:
-    image: jorisgls/image-upload-service
-    environment:
-      - PORT=8000
-    ports:
-      - 8001:8000
-    volumes:
-      - uploadedFilesStaging:/app/files
-
 volumes:
   stagingDB:
   uploadedFilesStaging:

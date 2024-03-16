@@ -37,15 +37,6 @@ services:
     environment:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
 
-  fileuploadservice:
-    image: jorisgls/image-upload-service
-    environment:
-      - PORT=8000
-    ports:
-      - 8000:8000
-    volumes:
-      - uploadedFilesProd:/app/files
-
 volumes:
   prodDB:
   uploadedFilesProd:
