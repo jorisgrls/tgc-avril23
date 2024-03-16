@@ -21,10 +21,10 @@ jobs:
       - e2e-tests
     uses: jorisgrls/tgc-avril23/.github/workflows/build-backend.yml@main
     secrets:
-      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_USERNAME: jorisgls
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: scrip/tgc-avril23-back
+      image_name: jorisgls/tgc-avril23-back
 
   build-and-push-client:
     needs:
@@ -32,10 +32,10 @@ jobs:
       - e2e-tests
     uses: jorisgrls/tgc-avril23/.github/workflows/build-frontend.yml@main
     secrets:
-      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_USERNAME: jorisgls
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: scrip/tgc-avril23-front
+      image_name: jorisgls/tgc-avril23-front
       fileupload_api_url: https://files.joris.tech
       graphql_api_url: https://api.joris.tech
 

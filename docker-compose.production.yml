@@ -23,7 +23,7 @@ services:
       - SERVER_PORT=${SERVER_PORT:-4001}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://joris.tech,https://api.joris.tech}
-    image: scrip/tgc-avril23-back
+    image: jorisgls/tgc-avril23-back
     depends_on:
       db:
         condition: service_healthy
@@ -31,20 +31,11 @@ services:
       - 4001:4001
 
   frontend:
-    image: scrip/tgc-avril23-front
+    image: jorisgls/tgc-avril23-front
     ports:
       - 3000:3000
     environment:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
-
-  fileuploadservice:
-    image: scrip/image-upload-service
-    environment:
-      - PORT=8000
-    ports:
-      - 8000:8000
-    volumes:
-      - uploadedFilesProd:/app/files
 
 volumes:
   prodDB:

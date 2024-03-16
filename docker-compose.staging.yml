@@ -23,7 +23,7 @@ services:
       - SERVER_PORT=${SERVER_PORT:-5001}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://staging.joris.tech,https://api.staging.joris.tech}
-    image: scrip/tgc-avril23-staging-back
+    image: jorisgls/tgc-avril23-staging-back
     depends_on:
       db-staging:
         condition: service_healthy
@@ -31,20 +31,11 @@ services:
       - 5001:5001
 
   frontend-staging:
-    image: scrip/tgc-avril23-staging-front
+    image: jorisgls/tgc-avril23-staging-front
     ports:
       - 3001:3000
     environment:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
-
-  fileuploadservice-staging:
-    image: scrip/image-upload-service
-    environment:
-      - PORT=8000
-    ports:
-      - 8001:8000
-    volumes:
-      - uploadedFilesStaging:/app/files
 
 volumes:
   stagingDB:
