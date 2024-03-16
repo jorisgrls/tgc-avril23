@@ -31,13 +31,13 @@ services:
       - ./frontend/src:/app/src
 
   fileuploadservice:
-      image : scrip/image-upload-service
-      environment:
-        - PORT=8000
-      ports:
-        - 8000:8000
-      volumes:
-        - ./file-upload-service/files:/app/files
+    image: jorisgls/image-upload-service
+    environment:
+      - PORT=8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./file-upload-service/files:/app/files
 
 volumes:
   prodDB:
