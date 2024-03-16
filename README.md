@@ -76,7 +76,7 @@ sudo apt install git-all -y
 ## 4. Clone the repo and cd into it
 
 ```sh
-mkdir apps && cd apps && git clone https://github.com/ComicScrip/tgc-avril23.git && cd tgc-avril23
+mkdir apps && cd apps && git clone https://github.com/jorisgrls/tgc-avril23.git && cd tgc-avril23
 ```
 
 ## 5. Install Docker

@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-push-server-staging:
-    uses: ComicScrip/tgc-avril23/.github/workflows/build-backend.yml@staging
+    uses: jorisgrls/tgc-avril23/.github/workflows/build-backend.yml@staging
     secrets:
       DOCKERHUB_USERNAME: scrip
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -15,7 +15,7 @@ jobs:
       image_name: scrip/tgc-avril23-staging-back
 
   build-and-push-client-staging:
-    uses: ComicScrip/tgc-avril23/.github/workflows/build-frontend.yml@staging
+    uses: jorisgrls/tgc-avril23/.github/workflows/build-frontend.yml@staging
     secrets:
       DOCKERHUB_USERNAME: scrip
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
