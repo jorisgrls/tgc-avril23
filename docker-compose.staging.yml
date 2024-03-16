@@ -1,5 +1,3 @@
-
-
 services:
   db-staging:
     image: postgres:15-alpine
@@ -15,7 +13,7 @@ services:
 
   backend-staging:
     environment:
-      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-staging.the-good-corner.duckdns.org}
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-staging.joris.tech}
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-db-staging}
       - DB_USER=${DB_USER:-postgres}
@@ -24,13 +22,13 @@ services:
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-5001}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://staging.the-good-corner.duckdns.org,https://api.staging.the-good-corner.duckdns.org}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://staging.joris.tech,https://api.staging.joris.tech}
     image: scrip/tgc-avril23-staging-back
     depends_on:
       db-staging:
         condition: service_healthy
     ports:
-      - 5001:5001      
+      - 5001:5001
 
   frontend-staging:
     image: scrip/tgc-avril23-staging-front
@@ -38,7 +36,7 @@ services:
       - 3001:3000
     environment:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
-      
+
   fileuploadservice-staging:
     image: scrip/image-upload-service
     environment:

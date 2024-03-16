@@ -21,8 +21,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       image_name: scrip/tgc-avril23-staging-front
-      fileupload_api_url: https://files.staging.the-good-corner.duckdns.org
-      graphql_api_url: https://api.staging.the-good-corner.duckdns.org
+      fileupload_api_url: https://files.staging.joris.tech
+      graphql_api_url: https://api.staging.joris.tech
 
   notify:
     needs:
@@ -33,4 +33,4 @@ jobs:
       - name: Call VPS webhook to update staging
         uses: wei/curl@v1
         with:
-          args: https://ops.the-good-corner.duckdns.org/hooks/update-staging
+          args: https://ops.joris.tech/hooks/update-staging

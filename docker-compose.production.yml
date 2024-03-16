@@ -13,7 +13,7 @@ services:
 
   backend:
     environment:
-      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-the-good-corner.duckdns.org}
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-joris.tech}
       - NODE_ENV=${NODE_ENV:-production}
       - DB_HOST=${DB_HOST:-db}
       - DB_USER=${DB_USER:-postgres}
@@ -22,7 +22,7 @@ services:
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-4001}
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
-      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://the-good-corner.duckdns.org,https://api.the-good-corner.duckdns.org}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://joris.tech,https://api.joris.tech}
     image: scrip/tgc-avril23-back
     depends_on:
       db:
@@ -38,7 +38,7 @@ services:
       - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
 
   fileuploadservice:
-    image : scrip/image-upload-service
+    image: scrip/image-upload-service
     environment:
       - PORT=8000
     ports:

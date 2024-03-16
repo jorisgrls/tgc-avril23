@@ -36,8 +36,8 @@ jobs:
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
       image_name: scrip/tgc-avril23-front
-      fileupload_api_url: https://files.the-good-corner.duckdns.org
-      graphql_api_url: https://api.the-good-corner.duckdns.org
+      fileupload_api_url: https://files.joris.tech
+      graphql_api_url: https://api.joris.tech
 
   notify-vps:
     needs:
@@ -48,4 +48,4 @@ jobs:
       - name: Call VPS webhook to update production
         uses: wei/curl@v1
         with:
-          args: https://ops.the-good-corner.duckdns.org/hooks/update-production
+          args: https://ops.joris.tech/hooks/update-production
