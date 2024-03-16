@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
+      interval: 1s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - prodDB:/var/lib/postgresql/data
+
+  backend:
+    environment:
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-the-good-corner.duckdns.org}
+      - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=${DB_HOST:-db}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASS=${DB_PASS:-postgres}
+      - DB_NAME=${DB_NAME:-postgres}
+      - SERVER_HOST=${SERVER_HOST:-localhost}
+      - SERVER_PORT=${SERVER_PORT:-4001}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://the-good-corner.duckdns.org,https://api.the-good-corner.duckdns.org}
+    image: scrip/tgc-avril23-back
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 4001:4001
+
+  frontend:
+    image: scrip/tgc-avril23-front
+    ports:
+      - 3000:3000
+    environment:
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
+
+  fileuploadservice:
+    image : scrip/image-upload-service
+    environment:
+      - PORT=8000
+    ports:
+      - 8000:8000
+    volumes:
+      - uploadedFilesProd:/app/files
+
+volumes:
+  prodDB:
+  uploadedFilesProd:

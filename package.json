@@ -1,0 +1,13 @@
+{
+  "name": "the-good-corner",
+  "version": "1.0.0",
+  "description": "Just ads",
+  "scripts": {
+    "format": "npx prettier . --write",
+    "dev": "docker compose up --build",
+    "start:prod": "docker compose -f docker-compose.production.yml up --build --remove-orphans -d",
+    "stop:prod": "docker compose -f docker-compose.production.yml down",
+    "db": "docker compose up db"
+  },
+  "license": "ISC"
+}

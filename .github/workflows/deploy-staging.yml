@@ -1,0 +1,36 @@
+name: Compile and push client and server to staging
+
+on:
+  push:
+    branches: ['staging']
+  workflow_dispatch:
+
+jobs:
+  build-and-push-server-staging:
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-backend.yml@staging
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-staging-back
+
+  build-and-push-client-staging:
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-frontend.yml@staging
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-staging-front
+      fileupload_api_url: https://files.staging.the-good-corner.duckdns.org
+      graphql_api_url: https://api.staging.the-good-corner.duckdns.org
+
+  notify:
+    needs:
+      - build-and-push-server-staging
+      - build-and-push-client-staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call VPS webhook to update staging
+        uses: wei/curl@v1
+        with:
+          args: https://ops.the-good-corner.duckdns.org/hooks/update-staging

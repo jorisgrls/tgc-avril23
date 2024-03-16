@@ -1,0 +1,45 @@
+services:
+  testDB:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
+      interval: 1s
+      timeout: 2s
+      retries: 60
+    tmpfs: /var/lib/postgresql
+    ports:
+      - 5432:5432
+
+  backend:
+    environment:
+      DB_HOST: testDB
+      CORS_ALLOWED_ORIGINS: http://localhost:3000
+    build: ../backend
+    depends_on:
+      testDB:
+        condition: service_healthy
+    ports:
+      - 4001:4001
+    volumes:
+      - ../backend/src:/app/src
+    healthcheck:
+      test: 'curl --fail --request GET -H ''content-type:application/json'' --url ''http://localhost:4001/graphql?query=%7B__typename%7D'''
+      interval: 3s
+      timeout: 5s
+      retries: 30
+
+  frontend:
+    build: ../frontend
+    environment:
+      - NEXT_PUBLIC_GRAPHQL_API_URL=http://localhost:4001
+    ports:
+      - 3000:3000
+    volumes:
+      - ../frontend/src:/app/src
+    healthcheck:
+      test: "curl --fail --request GET --url http://localhost:3000"
+      interval: 1s
+      timeout: 2s
+      retries: 60

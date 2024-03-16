@@ -1,0 +1,92 @@
+import { useState } from "react";
+
+import { TrashIcon } from "@heroicons/react/outline";
+import { PencilIcon } from "@heroicons/react/outline";
+import { CheckIcon } from "@heroicons/react/outline";
+import { XCircleIcon } from "@heroicons/react/outline";
+import {
+  Category,
+  useUpdateCategoryMutation,
+} from "@/graphql/generated/schema";
+
+interface AdminCategoryRowProps {
+  category: Category;
+  handleDeleteCategory: (id: number) => Promise<void>;
+}
+export default function AdminCategoryRow({
+  category: { id, name },
+  handleDeleteCategory,
+}: AdminCategoryRowProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [displayedName, setDisplayedName] = useState(name);
+
+  const [updateCategory] = useUpdateCategoryMutation();
+
+  const handleSave = async () => {
+    try {
+      if (displayedName) {
+        await updateCategory({
+          variables: { data: { name: displayedName }, categoryId: id },
+        });
+        setIsEditing(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setDisplayedName(name);
+    }
+  };
+
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>
+        {isEditing ? (
+          <input
+            type="text"
+            className="input"
+            value={displayedName}
+            onChange={(e) => setDisplayedName(e.target.value)}
+          />
+        ) : (
+          displayedName
+        )}
+      </td>
+      <td>
+        {isEditing ? (
+          <div>
+            <button onClick={handleSave}>
+              <CheckIcon width={24} height={24} />
+            </button>
+            <button
+              onClick={() => {
+                setIsEditing(false);
+                setDisplayedName(name);
+              }}
+            >
+              <XCircleIcon width={24} height={24} className="ml-2" />
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={() => setIsEditing(true)}>
+              <PencilIcon width={24} height={24} />
+            </button>
+            <button
+              onClick={() => {
+                if (
+                  confirm(
+                    "voulez vous vraiement supprimer la categorie ? Toutes les annonces liées seront également supprimées"
+                  )
+                )
+                  handleDeleteCategory(id);
+              }}
+            >
+              <TrashIcon width={24} height={24} className="ml-2" />
+            </button>
+          </div>
+        )}
+      </td>
+    </tr>
+  );
+}

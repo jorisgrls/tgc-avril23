@@ -1,0 +1,51 @@
+name: Test, compile and push client and server to production
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  client-tests:
+    uses: ComicScrip/tgc-avril23/.github/workflows/test-front.yml@main
+
+  e2e-tests:
+    uses: ComicScrip/tgc-avril23/.github/workflows/e2e-tests.yml@main
+
+  integration-tests:
+    uses: ComicScrip/tgc-avril23/.github/workflows/integration-tests.yml@main
+
+  build-and-push-server:
+    needs:
+      - integration-tests
+      - e2e-tests
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-backend.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-back
+
+  build-and-push-client:
+    needs:
+      - client-tests
+      - e2e-tests
+    uses: ComicScrip/tgc-avril23/.github/workflows/build-frontend.yml@main
+    secrets:
+      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+    with:
+      image_name: scrip/tgc-avril23-front
+      fileupload_api_url: https://files.the-good-corner.duckdns.org
+      graphql_api_url: https://api.the-good-corner.duckdns.org
+
+  notify-vps:
+    needs:
+      - build-and-push-client
+      - build-and-push-server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call VPS webhook to update production
+        uses: wei/curl@v1
+        with:
+          args: https://ops.the-good-corner.duckdns.org/hooks/update-production

@@ -1,0 +1,24 @@
+services:
+  testDB:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
+      interval: 1s
+      timeout: 1s
+      retries: 60
+    tmpfs: /var/lib/postgresql
+    ports:
+      - 5432:5432
+
+  testrunner:
+    build:
+      dockerfile: Dockerfile.integration-tests
+      context: ./backend
+    depends_on:
+      testDB:
+        condition: service_healthy
+    environment:
+      DB_HOST: testDB

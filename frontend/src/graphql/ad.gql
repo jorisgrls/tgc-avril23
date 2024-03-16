@@ -1,0 +1,27 @@
+query Ad($adId: Float!) {
+  ad(adId: $adId) {
+    id
+    title
+    description
+    price
+    owner {
+      id
+      email
+      nickname
+      avatar
+      role
+    }
+    category {
+      id
+      name
+    }
+    createdAt
+    location
+    picture
+    tags {
+      id
+      name
+    }
+    updatedAt
+  }
+}

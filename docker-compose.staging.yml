@@ -1,0 +1,53 @@
+
+
+services:
+  db-staging:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - stagingDB:/var/lib/postgresql/data
+
+  backend-staging:
+    environment:
+      - COOKIE_DOMAIN=${COOKIE_DOMAIN:-staging.the-good-corner.duckdns.org}
+      - NODE_ENV=${NODE_ENV:-production}
+      - DB_HOST=${DB_HOST:-db-staging}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASS=${DB_PASS:-postgres}
+      - DB_NAME=${DB_NAME:-postgres}
+      - SERVER_HOST=${SERVER_HOST:-localhost}
+      - SERVER_PORT=${SERVER_PORT:-5001}
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-abcdfzfefzefzefzeefghijkl}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://staging.the-good-corner.duckdns.org,https://api.staging.the-good-corner.duckdns.org}
+    image: scrip/tgc-avril23-staging-back
+    depends_on:
+      db-staging:
+        condition: service_healthy
+    ports:
+      - 5001:5001      
+
+  frontend-staging:
+    image: scrip/tgc-avril23-staging-front
+    ports:
+      - 3001:3000
+    environment:
+      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY:-thekey}
+      
+  fileuploadservice-staging:
+    image: scrip/image-upload-service
+    environment:
+      - PORT=8000
+    ports:
+      - 8001:8000
+    volumes:
+      - uploadedFilesStaging:/app/files
+
+volumes:
+  stagingDB:
+  uploadedFilesStaging:

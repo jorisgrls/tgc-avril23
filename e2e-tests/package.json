@@ -1,0 +1,46 @@
+{
+  "name": "e2e-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test -c dist/e2e-tests --trace on",
+    "test:gui": "npm run pretest && npx playwright test -c dist/e2e-tests --trace on --headed",
+    "test:watch": "npm run test && chokidar 'src/**/*.spec.ts' -c 'npm run test'",
+    "test:watch:gui": "npm run test:gui && chokidar 'src/**/*.spec.ts' -c 'npm run test:gui'",
+    "pretest": "tsc --incremental -p tsconfig.json",
+    "app:start": "docker compose -f docker-compose.e2e-tests.yml up --wait",
+    "app:stop": "docker compose -f docker-compose.e2e-tests.yml down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/cookie": "^0.6.0",
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.12",
+    "@types/jsonwebtoken": "^9.0.5",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "argon2": "^0.30.3",
+    "class-validator": "^0.14.0",
+    "cookie": "^0.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "graphql": "^16.8.1",
+    "graphql-scalars": "^1.22.4",
+    "graphql-tag": "^2.12.6",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.1.13",
+    "ts-dotenv": "^0.9.1",
+    "typeorm": "^0.3.17",
+    "type-graphql": "^2.0.0-beta.3"
+  }
+}
