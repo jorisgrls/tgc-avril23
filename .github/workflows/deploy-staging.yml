@@ -9,18 +9,18 @@ jobs:
   build-and-push-server-staging:
     uses: jorisgrls/tgc-avril23/.github/workflows/build-backend.yml@staging
     secrets:
-      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_USERNAME: jorisgls
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: scrip/tgc-avril23-staging-back
+      image_name: jorisgls/tgc-avril23-staging-back
 
   build-and-push-client-staging:
     uses: jorisgrls/tgc-avril23/.github/workflows/build-frontend.yml@staging
     secrets:
-      DOCKERHUB_USERNAME: scrip
+      DOCKERHUB_USERNAME: jorisgls
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
     with:
-      image_name: scrip/tgc-avril23-staging-front
+      image_name: jorisgls/tgc-avril23-staging-front
       fileupload_api_url: https://files.staging.joris.tech
       graphql_api_url: https://api.staging.joris.tech
 
