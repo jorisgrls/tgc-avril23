@@ -77,7 +77,9 @@ export default function Header() {
           <>
             <Link href="/newAd" className="button link-button">
               <span className="mobile-short-label">Publier</span>
-              <span className="desktop-long-label">Publier une annonce</span>
+              <span className="desktop-long-label">
+                Publier une annonce omg
+              </span>
             </Link>
             <Link href="/profile" className="cursor-pointer">
               <img
