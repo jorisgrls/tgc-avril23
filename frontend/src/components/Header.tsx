@@ -76,7 +76,7 @@ export default function Header() {
         {isLoggedIn && (
           <>
             <Link href="/newAd" className="button link-button">
-              <span className="mobile-short-label">Publier</span>
+              <span className="mobile-short-label">Publierr</span>
               <span className="desktop-long-label">
                 Publier une annonce omg
               </span>
