@@ -35,7 +35,7 @@ export default function Header() {
         <h1>
           <Link href="/" className="button logo link-button">
             <span className="mobile-short-label">TGC</span>
-            <span className="desktop-long-label text-xl">THE GOOD CORNER</span>
+            <span className="desktop-long-label text-xl">THE GOOD CORNERR</span>
           </Link>
         </h1>
         <form
@@ -76,7 +76,7 @@ export default function Header() {
         {isLoggedIn && (
           <>
             <Link href="/newAd" className="button link-button">
-              <span className="mobile-short-label">Publier</span>
+              <span className="mobile-short-label">Publierr</span>
               <span className="desktop-long-label">
                 Publier une annonce omg
               </span>
