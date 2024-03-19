@@ -4,16 +4,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-} from "typeorm";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-import { Recipe } from "./recipe";
-import { UserProduct } from "./userProduct";
-import { IsEmail, Length } from "class-validator";
-import { hash, verify } from "argon2";
+} from 'typeorm';
+import { ObjectType, Field, Int, InputType } from 'type-graphql';
+import { Recipe } from './recipe';
+import { UserProduct } from './userProduct';
+import { IsEmail, Length } from 'class-validator';
+import { hash, verify } from 'argon2';
 
 export enum UserRole {
-  ADMIN = "ADMIN",
-  VISITOR = "VISITOR",
+  ADMIN = 'ADMIN',
+  VISITOR = 'VISITOR',
 }
 
 @Entity()
@@ -27,11 +27,11 @@ export class User extends BaseEntity {
   @Field()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field()
   firstname: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field()
   lastname: string;
 
@@ -39,7 +39,7 @@ export class User extends BaseEntity {
   @Field()
   hashedPassword: string;
 
-  @Column({ type: "enum", enum: UserRole, default: UserRole.VISITOR })
+  @Column({ type: 'enum', enum: UserRole, default: UserRole.VISITOR })
   @Field()
   role: UserRole;
 
