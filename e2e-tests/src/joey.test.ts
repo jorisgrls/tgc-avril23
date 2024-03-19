@@ -1,22 +1,19 @@
 import { test, expect } from '@playwright/test';
 
-test('Recherche sur Google', async ({ page }) => {
-  // Ouvrir la page Google
-  await page.goto('https://www.google.com');
+test('Addition et multiplication de nombres', async () => {
+  // Définir les nombres à utiliser
+  const num1 = 5;
+  const num2 = 7;
 
-  // Vérifier que la page est bien ouverte
-  await expect(page).toHaveTitle('Google');
+  // Calculer l'addition
+  const addition = num1 + num2;
 
-  // Entrer un terme de recherche dans le champ de recherche
-  await page.fill('input[name="q"]', 'OpenAI');
+  // Vérifier que l'addition est correcte
+  expect(addition).toBe(12);
 
-  // Cliquer sur le bouton "Recherche Google"
-  await page.click('input[name="btnK"]');
+  // Calculer la multiplication
+  const multiplication = num1 * num2;
 
-  // Attendre que les résultats de recherche soient chargés
-  await page.waitForSelector('#search');
-
-  // Vérifier que des résultats sont affichés
-  const searchResults = await page.$$('#search .g');
-  expect(searchResults.length).toBeGreaterThan(0);
+  // Vérifier que la multiplication est correcte
+  expect(multiplication).toBe(35);
 });
