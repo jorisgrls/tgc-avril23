@@ -41,9 +41,8 @@ export class User extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enumName: 'user_role',
     enum: UserRole,
-    default: UserRole.VISITOR,
+    default: UserRole[UserRole.VISITOR],
   })
   @Field()
   role: UserRole;
