@@ -1,8 +1,0 @@
-query Ads {
-  ads {
-    id
-    title
-    price
-    picture
-  }
-}

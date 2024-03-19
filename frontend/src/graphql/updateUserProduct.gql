@@ -1,0 +1,8 @@
+mutation UpdateUserProduct($data: UserProductInput!) {
+  updateUserProduct(data: $data) {
+    quantity
+    product {
+      id
+    }
+  }
+}

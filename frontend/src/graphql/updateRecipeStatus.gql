@@ -1,0 +1,5 @@
+mutation UpdateRecipeStatus($status: String!, $updateRecipeStatusId: Float!) {
+  updateRecipeStatus(status: $status, id: $updateRecipeStatusId) {
+    id
+  }
+}

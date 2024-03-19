@@ -1,0 +1,10 @@
+query GetUserRecipes {
+  userRecipes {
+    id
+    title
+    status
+    statusReason
+    difficulty
+    description
+  }
+}

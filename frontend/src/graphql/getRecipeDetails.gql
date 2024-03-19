@@ -1,0 +1,26 @@
+query getRecipeDetails($recipeId: Float!) {
+  recipe(id: $recipeId) {
+    id
+    image
+    status
+    recipeProducts {
+      id
+      quantity
+      product {
+        name
+        unit
+      }
+    }
+    user {
+      id
+      lastname
+      firstname
+    }
+    content
+    description
+    difficulty
+    duration
+    isVegetarian
+    title
+  }
+}

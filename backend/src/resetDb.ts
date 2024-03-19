@@ -1,109 +1,116 @@
 import db, { clearDB } from './db';
-import { Category } from './entities/category';
-import { Tag } from './entities/tag';
-import { Ad } from './entities/ad';
-import { User, UserRole, hashPassword } from './entities/user';
+import { Product } from './entities/product';
+import { Recipe, Status } from './entities/recipe';
+import { RecipeProduct } from './entities/recipeProduct';
+import { User, UserRole } from './entities/user';
+import { UserProduct } from './entities/userProduct';
 
 export default async function main() {
   await db.initialize();
   await clearDB();
   await db.synchronize();
 
-  const informatique = await Category.create({ name: 'informatique' }).save();
-  const sport = await Category.create({ name: 'sport' }).save();
-  const automobile = await Category.create({ name: 'automobile' }).save();
-
-  const tag1 = await Tag.create({ name: 'tag1' }).save();
-  const tag2 = await Tag.create({ name: 'tag2' }).save();
-  const tag3 = await Tag.create({ name: 'tag3' }).save();
-
-  const user1 = await User.create({
-    email: 'user@test.com',
-    nickname: 'user1',
-    hashedPassword: await hashPassword('password'),
-    avatar:
-      'https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-260nw-418179865.jpg',
+  // Création des produits
+  const tomates = await Product.create({
+    name: 'tomates',
+    icon: 'https://image.noelshack.com/fichiers/2024/10/4/1709829177-tomate.png',
+    unit: 'piece',
+  }).save();
+  const oignons = await Product.create({
+    name: 'oignons',
+    icon: 'https://image.noelshack.com/fichiers/2024/10/4/1709829177-oignon.png',
+    unit: 'kg',
+  }).save();
+  const poulet = await Product.create({
+    name: 'poulet',
+    icon: 'https://image.noelshack.com/fichiers/2024/10/4/1709829177-cuisse-de-poulet.png',
+    unit: 'kg',
   }).save();
 
-  const admin1 = await User.create({
-    email: 'admin@test.com',
-    nickname: 'admin1',
-    hashedPassword: await hashPassword('password'),
-    avatar:
-      'https://www.shutterstock.com/image-vector/user-icon-vector-600nw-393536320.jpg',
+  // Création des utilisateurs
+  const user1 = await User.create({
+    email: 'johndoe@gmail.com',
+    firstname: 'John',
+    lastname: 'Doe',
+    hashedPassword: 'password',
+    role: UserRole.ADMIN,
+  }).save();
+  const user2 = await User.create({
+    email: 'jorisgrilleres@gmail.com',
+    firstname: 'Joris',
+    lastname: 'Grilleres',
+    hashedPassword: 'password',
     role: UserRole.ADMIN,
   }).save();
 
-  await Ad.create({
-    title: 'Ferrari',
-    description: 'description1',
-    price: 80000,
-    category: automobile,
-    tags: [tag1, tag2],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/93/1a/c5/931ac53fb1e84de07b5e6d3993b7498634381c77.jpg?rule=ad-large',
-    location: 'Paris',
-    owner: user1,
+  // Création des recettes
+  const recipe1 = await Recipe.create({
+    title: 'Ratatouille',
+    description: 'Une recette de ratatouille',
+    image:
+      'https://image.noelshack.com/fichiers/2024/10/4/1709811131-pizza.jpg',
+    status: Status.PENDING,
+    difficulty: '4',
+    duration: '30',
+    isVegetarian: true,
+    user: user1,
+    content: 'Faire cuire les légumes',
+  }).save();
+  const recipe2 = await Recipe.create({
+    title: 'Poulet basquaise',
+    description: 'Une recette de poulet basquaise',
+    image:
+      'https://image.noelshack.com/fichiers/2024/10/4/1709811131-pizza.jpg',
+    status: Status.VALIDATED,
+    difficulty: '3',
+    duration: '45',
+    isVegetarian: false,
+    user: user1,
+    content: 'Faire cuire le poulet',
+  }).save();
+  const recipe3 = await Recipe.create({
+    title: 'Lasagne',
+    description: 'Recette de lasagne',
+    image:
+      'https://image.noelshack.com/fichiers/2024/10/4/1709811131-pizza.jpg',
+    status: Status.PENDING,
+    difficulty: '3',
+    duration: '45',
+    isVegetarian: false,
+    user: user2,
+    content: 'Faire revenir le boeuf',
   }).save();
 
-  await Ad.create({
-    title: 'Macbook Pro',
-    description: 'description1',
-    price: 899,
-    category: informatique,
-    tags: [tag2],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/17/d5/97/17d5972da614683f6d51f38e91ead0365a78b97d.jpg?rule=classified-1200x800-webp',
-    location: 'Nantes',
-    owner: admin1,
+  // Création des produits des recettes
+  const recipe1product1 = await RecipeProduct.create({
+    quantity: 2,
+    product: tomates,
+    recipe: recipe1,
   }).save();
-
-  await Ad.create({
-    title: 'Trampoline',
-    description: 'description2',
-    price: 800,
-    category: sport,
-    tags: [tag1, tag2, tag3],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/40/be/0f/40be0f14514235010864ebf29537ac358156f509.jpg?rule=classified-1200x800-webp',
-    location: 'Bordeaux',
-    owner: user1,
+  const recipe1product2 = await RecipeProduct.create({
+    quantity: 3,
+    product: oignons,
+    recipe: recipe1,
   }).save();
-
-  await Ad.create({
-    title: 'Renault Laguna (pour pièces)',
-    description: 'description1',
-    price: 699,
-    category: automobile,
-    tags: [tag1, tag2],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/03/06/27/030627c1c7027065be1a74aa0306bde282545e5e.jpg?rule=ad-large',
-    location: 'Paris',
-    owner: user1,
+  const recipe2product1 = await RecipeProduct.create({
+    quantity: 10,
+    product: tomates,
+    recipe: recipe2,
   }).save();
+  // Ajout des produits aux recettes
+  recipe1.recipeProducts = [recipe1product1, recipe1product2];
+  recipe2.recipeProducts = [recipe2product1];
 
-  await Ad.create({
-    title: 'Clavier',
-    description: 'description1',
-    price: 7.6,
-    category: informatique,
-    tags: [tag2],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/e7/d7/aa/e7d7aa86810bebbc2343820c060d141f9f0e43a0.jpg?rule=ad-large',
-    location: 'Roubaix',
-    owner: admin1,
+  // Création des produits de l'utilisateur
+  await UserProduct.create({
+    quantity: 25,
+    product: tomates,
+    user: user1,
   }).save();
-
-  await Ad.create({
-    title: 'Ballon de football (en or)',
-    description: 'description2',
-    price: 800,
-    category: sport,
-    tags: [tag1, tag2, tag3],
-    picture:
-      'https://img.leboncoin.fr/api/v1/lbcpb1/images/14/0f/5c/140f5cb711e31bf8641c020e96c24568e65a0c4e.jpg?rule=ad-large',
-    location: 'Toulon',
-    owner: user1,
+  await UserProduct.create({
+    quantity: 25,
+    product: oignons,
+    user: user1,
   }).save();
 
   await db.destroy();

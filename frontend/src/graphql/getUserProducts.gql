@@ -1,0 +1,15 @@
+query getUserProducts {
+  user {
+    userProducts {
+      id
+      quantity
+      product {
+        id
+        name
+        unit
+        icon
+      }
+    }
+    id
+  }
+}

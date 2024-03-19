@@ -16,27 +16,6 @@ export type Scalars = {
   DateTimeISO: any;
 };
 
-export type Ad = {
-  __typename?: 'Ad';
-  category: Category;
-  createdAt: Scalars['DateTimeISO'];
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  location: Scalars['String'];
-  owner: User;
-  picture: Scalars['String'];
-  price: Scalars['Float'];
-  tags: Array<Tag>;
-  title: Scalars['String'];
-  updatedAt: Scalars['DateTimeISO'];
-};
-
-export type Category = {
-  __typename?: 'Category';
-  id: Scalars['Int'];
-  name: Scalars['String'];
-};
-
 export type LoginUserInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -44,49 +23,25 @@ export type LoginUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createAd: Ad;
-  createCategory: Category;
-  createTag: Tag;
-  deleteAd: Scalars['String'];
-  deleteCategory: Scalars['String'];
-  deleteTag: Scalars['String'];
+  addUserProduct: UserProduct;
+  createExample: Scalars['String'];
+  createRecipe: Recipe;
   login: Scalars['String'];
   logout: Scalars['Boolean'];
   signUp: User;
-  updateAd: Ad;
-  updateCategory: Category;
-  updateProfile: User;
-  updateTag: Tag;
+  updateRecipeStatus: Recipe;
+  updateUserProduct: UserProduct;
 };
 
 
-export type MutationCreateAdArgs = {
-  data: NewAdInput;
+export type MutationAddUserProductArgs = {
+  data: UserProductInput;
 };
 
 
-export type MutationCreateCategoryArgs = {
-  data: NewCategoryInput;
-};
-
-
-export type MutationCreateTagArgs = {
-  data: NewTagInput;
-};
-
-
-export type MutationDeleteAdArgs = {
-  adId: Scalars['Float'];
-};
-
-
-export type MutationDeleteCategoryArgs = {
-  categoryId: Scalars['Float'];
-};
-
-
-export type MutationDeleteTagArgs = {
-  tagId: Scalars['Float'];
+export type MutationCreateRecipeArgs = {
+  data: RecipeInput;
+  products: Array<RecipeProductInput>;
 };
 
 
@@ -100,190 +55,164 @@ export type MutationSignUpArgs = {
 };
 
 
-export type MutationUpdateAdArgs = {
-  adId: Scalars['Float'];
-  data: UpdateAdInput;
+export type MutationUpdateRecipeStatusArgs = {
+  id: Scalars['Float'];
+  status: Scalars['String'];
 };
 
 
-export type MutationUpdateCategoryArgs = {
-  categoryId: Scalars['Float'];
-  data: UpdateCategoryInput;
-};
-
-
-export type MutationUpdateProfileArgs = {
-  data: UpdateUserInput;
-};
-
-
-export type MutationUpdateTagArgs = {
-  data: UpdateTagInput;
-  tagId: Scalars['Float'];
-};
-
-export type NewAdInput = {
-  category: ObjectId;
-  description: Scalars['String'];
-  location: Scalars['String'];
-  picture: Scalars['String'];
-  price: Scalars['Float'];
-  title: Scalars['String'];
-};
-
-export type NewCategoryInput = {
-  name: Scalars['String'];
-};
-
-export type NewTagInput = {
-  name: Scalars['String'];
+export type MutationUpdateUserProductArgs = {
+  data: UserProductInput;
 };
 
 export type NewUserInput = {
   email: Scalars['String'];
-  nickname: Scalars['String'];
+  firstname: Scalars['String'];
+  lastname: Scalars['String'];
   password: Scalars['String'];
 };
 
-export type ObjectId = {
+export type Product = {
+  __typename?: 'Product';
+  icon: Scalars['String'];
   id: Scalars['Int'];
+  name: Scalars['String'];
+  unit: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  ad: Ad;
-  ads: Array<Ad>;
-  categories: Array<Category>;
+  lastRecipes: Array<Recipe>;
+  pendingRecipes: Array<Recipe>;
+  products: Array<Product>;
   profile: User;
-  tags: Array<Tag>;
+  recipe: Recipe;
+  recipesForUser: Array<Recipe>;
+  user: User;
+  userRecipes: Array<Recipe>;
 };
 
 
-export type QueryAdArgs = {
-  adId: Scalars['Float'];
+export type QueryRecipeArgs = {
+  id: Scalars['Float'];
 };
 
-
-export type QueryAdsArgs = {
-  categoryId?: InputMaybe<Scalars['Int']>;
-  ownerId?: InputMaybe<Scalars['Int']>;
-  tagsId?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryCategoriesArgs = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-
-export type QueryTagsArgs = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type Tag = {
-  __typename?: 'Tag';
+export type Recipe = {
+  __typename?: 'Recipe';
+  content: Scalars['String'];
+  createdAt: Scalars['DateTimeISO'];
+  description: Scalars['String'];
+  difficulty: Scalars['String'];
+  duration: Scalars['String'];
   id: Scalars['Int'];
-  name: Scalars['String'];
+  image: Scalars['String'];
+  isVegetarian: Scalars['Boolean'];
+  recipeProducts: Array<RecipeProduct>;
+  status: Scalars['String'];
+  statusReason: Scalars['String'];
+  title: Scalars['String'];
+  user: User;
 };
 
-export type UpdateAdInput = {
-  category?: InputMaybe<ObjectId>;
-  city?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  location?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  price?: InputMaybe<Scalars['Float']>;
-  tags?: InputMaybe<Array<ObjectId>>;
-  title?: InputMaybe<Scalars['String']>;
+export type RecipeInput = {
+  content: Scalars['String'];
+  description: Scalars['String'];
+  difficulty: Scalars['String'];
+  duration: Scalars['String'];
+  image: Scalars['String'];
+  isVegetarian: Scalars['Boolean'];
+  title: Scalars['String'];
 };
 
-export type UpdateCategoryInput = {
-  name?: InputMaybe<Scalars['String']>;
+export type RecipeProduct = {
+  __typename?: 'RecipeProduct';
+  id: Scalars['Int'];
+  product: Product;
+  quantity: Scalars['Float'];
+  recipe: Recipe;
 };
 
-export type UpdateTagInput = {
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type UpdateUserInput = {
-  avatar?: InputMaybe<Scalars['String']>;
-  nickname?: InputMaybe<Scalars['String']>;
+export type RecipeProductInput = {
+  productId: Scalars['Float'];
+  quantity: Scalars['Float'];
 };
 
 export type User = {
   __typename?: 'User';
-  ads: Array<Ad>;
-  avatar: Scalars['String'];
   email: Scalars['String'];
+  firstname: Scalars['String'];
+  hashedPassword: Scalars['String'];
   id: Scalars['Int'];
-  nickname: Scalars['String'];
+  lastname: Scalars['String'];
+  recipes: Array<Recipe>;
   role: Scalars['String'];
+  userProducts: Array<UserProduct>;
 };
 
-export type AdQueryVariables = Exact<{
-  adId: Scalars['Float'];
+export type UserProduct = {
+  __typename?: 'UserProduct';
+  id: Scalars['Int'];
+  product: Product;
+  quantity: Scalars['Float'];
+  user: User;
+};
+
+export type UserProductInput = {
+  productId: Scalars['Float'];
+  quantity: Scalars['Float'];
+};
+
+export type AddUserProductMutationVariables = Exact<{
+  data: UserProductInput;
 }>;
 
 
-export type AdQuery = { __typename?: 'Query', ad: { __typename?: 'Ad', id: number, title: string, description: string, price: number, createdAt: any, location: string, picture: string, updatedAt: any, owner: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string }, category: { __typename?: 'Category', id: number, name: string }, tags: Array<{ __typename?: 'Tag', id: number, name: string }> } };
+export type AddUserProductMutation = { __typename?: 'Mutation', addUserProduct: { __typename?: 'UserProduct', id: number } };
 
-export type AdsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AdsQuery = { __typename?: 'Query', ads: Array<{ __typename?: 'Ad', id: number, title: string, price: number, picture: string }> };
-
-export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type CategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: number, name: string }> };
-
-export type CreateAdMutationVariables = Exact<{
-  data: NewAdInput;
+export type CreateRecipeMutationVariables = Exact<{
+  products: Array<RecipeProductInput> | RecipeProductInput;
+  data: RecipeInput;
 }>;
 
 
-export type CreateAdMutation = { __typename?: 'Mutation', createAd: { __typename?: 'Ad', id: number } };
+export type CreateRecipeMutation = { __typename?: 'Mutation', createRecipe: { __typename?: 'Recipe', id: number } };
 
-export type CreateCategoryMutationVariables = Exact<{
-  data: NewCategoryInput;
+export type GetLastRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLastRecipesQuery = { __typename?: 'Query', lastRecipes: Array<{ __typename?: 'Recipe', id: number, title: string, difficulty: string, duration: string, description: string, image: string, isVegetarian: boolean }> };
+
+export type GetPendingRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPendingRecipesQuery = { __typename?: 'Query', pendingRecipes: Array<{ __typename?: 'Recipe', id: number, status: string, title: string, description: string }> };
+
+export type GetPossibleRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPossibleRecipesQuery = { __typename?: 'Query', recipesForUser: Array<{ __typename?: 'Recipe', id: number, title: string, difficulty: string, duration: string, description: string, image: string, isVegetarian: boolean }> };
+
+export type GetProductsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProductsQuery = { __typename?: 'Query', products: Array<{ __typename?: 'Product', id: number, name: string }> };
+
+export type GetRecipeDetailsQueryVariables = Exact<{
+  recipeId: Scalars['Float'];
 }>;
 
 
-export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: number, name: string } };
+export type GetRecipeDetailsQuery = { __typename?: 'Query', recipe: { __typename?: 'Recipe', id: number, image: string, status: string, content: string, description: string, difficulty: string, duration: string, isVegetarian: boolean, title: string, recipeProducts: Array<{ __typename?: 'RecipeProduct', id: number, quantity: number, product: { __typename?: 'Product', name: string, unit: string } }>, user: { __typename?: 'User', id: number, lastname: string, firstname: string } } };
 
-export type CreateTagMutationVariables = Exact<{
-  data: NewTagInput;
-}>;
+export type GetUserProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CreateTagMutation = { __typename?: 'Mutation', createTag: { __typename?: 'Tag', id: number } };
+export type GetUserProductsQuery = { __typename?: 'Query', user: { __typename?: 'User', id: number, userProducts: Array<{ __typename?: 'UserProduct', id: number, quantity: number, product: { __typename?: 'Product', id: number, name: string, unit: string, icon: string } }> } };
 
-export type DeleteAdMutationVariables = Exact<{
-  adId: Scalars['Float'];
-}>;
+export type GetUserRecipesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type DeleteAdMutation = { __typename?: 'Mutation', deleteAd: string };
-
-export type DeleteCategoryMutationVariables = Exact<{
-  categoryId: Scalars['Float'];
-}>;
-
-
-export type DeleteCategoryMutation = { __typename?: 'Mutation', deleteCategory: string };
-
-export type DeleteTagMutationVariables = Exact<{
-  tagId: Scalars['Float'];
-}>;
-
-
-export type DeleteTagMutation = { __typename?: 'Mutation', deleteTag: string };
-
-export type TagsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type TagsQuery = { __typename?: 'Query', tags: Array<{ __typename?: 'Tag', id: number, name: string }> };
+export type GetUserRecipesQuery = { __typename?: 'Query', userRecipes: Array<{ __typename?: 'Recipe', id: number, title: string, status: string, statusReason: string, difficulty: string, description: string }> };
 
 export type LoginMutationVariables = Exact<{
   data: LoginUserInput;
@@ -300,154 +229,218 @@ export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
 export type ProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string, ads: Array<{ __typename?: 'Ad', id: number, title: string, picture: string, price: number }> } };
-
-export type SearchAdsQueryVariables = Exact<{
-  title?: InputMaybe<Scalars['String']>;
-  categoryId?: InputMaybe<Scalars['Int']>;
-  ownerId?: InputMaybe<Scalars['Int']>;
-  tagsId?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type SearchAdsQuery = { __typename?: 'Query', ads: Array<{ __typename?: 'Ad', id: number, picture: string, price: number, title: string }> };
+export type ProfileQuery = { __typename?: 'Query', profile: { __typename?: 'User', id: number, email: string, firstname: string, lastname: string, role: string } };
 
 export type SignupMutationVariables = Exact<{
   data: NewUserInput;
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
+export type SignupMutation = { __typename?: 'Mutation', signUp: { __typename?: 'User', id: number, email: string, role: string } };
 
-export type UpdateAdMutationVariables = Exact<{
-  data: UpdateAdInput;
-  adId: Scalars['Float'];
+export type UpdateRecipeStatusMutationVariables = Exact<{
+  status: Scalars['String'];
+  updateRecipeStatusId: Scalars['Float'];
 }>;
 
 
-export type UpdateAdMutation = { __typename?: 'Mutation', updateAd: { __typename?: 'Ad', id: number } };
+export type UpdateRecipeStatusMutation = { __typename?: 'Mutation', updateRecipeStatus: { __typename?: 'Recipe', id: number } };
 
-export type UpdateCategoryMutationVariables = Exact<{
-  data: UpdateCategoryInput;
-  categoryId: Scalars['Float'];
+export type UpdateUserProductMutationVariables = Exact<{
+  data: UserProductInput;
 }>;
 
 
-export type UpdateCategoryMutation = { __typename?: 'Mutation', updateCategory: { __typename?: 'Category', id: number } };
-
-export type UpdateProfileMutationVariables = Exact<{
-  data: UpdateUserInput;
-}>;
+export type UpdateUserProductMutation = { __typename?: 'Mutation', updateUserProduct: { __typename?: 'UserProduct', quantity: number, product: { __typename?: 'Product', id: number } } };
 
 
-export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile: { __typename?: 'User', id: number, email: string, nickname: string, avatar: string, role: string } };
-
-export type UpdateTagMutationVariables = Exact<{
-  data: UpdateTagInput;
-  tagId: Scalars['Float'];
-}>;
-
-
-export type UpdateTagMutation = { __typename?: 'Mutation', updateTag: { __typename?: 'Tag', id: number } };
-
-
-export const AdDocument = gql`
-    query Ad($adId: Float!) {
-  ad(adId: $adId) {
+export const AddUserProductDocument = gql`
+    mutation AddUserProduct($data: UserProductInput!) {
+  addUserProduct(data: $data) {
     id
+  }
+}
+    `;
+export type AddUserProductMutationFn = Apollo.MutationFunction<AddUserProductMutation, AddUserProductMutationVariables>;
+
+/**
+ * __useAddUserProductMutation__
+ *
+ * To run a mutation, you first call `useAddUserProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addUserProductMutation, { data, loading, error }] = useAddUserProductMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useAddUserProductMutation(baseOptions?: Apollo.MutationHookOptions<AddUserProductMutation, AddUserProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddUserProductMutation, AddUserProductMutationVariables>(AddUserProductDocument, options);
+      }
+export type AddUserProductMutationHookResult = ReturnType<typeof useAddUserProductMutation>;
+export type AddUserProductMutationResult = Apollo.MutationResult<AddUserProductMutation>;
+export type AddUserProductMutationOptions = Apollo.BaseMutationOptions<AddUserProductMutation, AddUserProductMutationVariables>;
+export const CreateRecipeDocument = gql`
+    mutation createRecipe($products: [RecipeProductInput!]!, $data: RecipeInput!) {
+  createRecipe(products: $products, data: $data) {
+    id
+  }
+}
+    `;
+export type CreateRecipeMutationFn = Apollo.MutationFunction<CreateRecipeMutation, CreateRecipeMutationVariables>;
+
+/**
+ * __useCreateRecipeMutation__
+ *
+ * To run a mutation, you first call `useCreateRecipeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateRecipeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createRecipeMutation, { data, loading, error }] = useCreateRecipeMutation({
+ *   variables: {
+ *      products: // value for 'products'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateRecipeMutation(baseOptions?: Apollo.MutationHookOptions<CreateRecipeMutation, CreateRecipeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateRecipeMutation, CreateRecipeMutationVariables>(CreateRecipeDocument, options);
+      }
+export type CreateRecipeMutationHookResult = ReturnType<typeof useCreateRecipeMutation>;
+export type CreateRecipeMutationResult = Apollo.MutationResult<CreateRecipeMutation>;
+export type CreateRecipeMutationOptions = Apollo.BaseMutationOptions<CreateRecipeMutation, CreateRecipeMutationVariables>;
+export const GetLastRecipesDocument = gql`
+    query getLastRecipes {
+  lastRecipes {
+    id
+    title
+    difficulty
+    duration
+    description
+    image
+    isVegetarian
+  }
+}
+    `;
+
+/**
+ * __useGetLastRecipesQuery__
+ *
+ * To run a query within a React component, call `useGetLastRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLastRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLastRecipesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetLastRecipesQuery(baseOptions?: Apollo.QueryHookOptions<GetLastRecipesQuery, GetLastRecipesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLastRecipesQuery, GetLastRecipesQueryVariables>(GetLastRecipesDocument, options);
+      }
+export function useGetLastRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLastRecipesQuery, GetLastRecipesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLastRecipesQuery, GetLastRecipesQueryVariables>(GetLastRecipesDocument, options);
+        }
+export type GetLastRecipesQueryHookResult = ReturnType<typeof useGetLastRecipesQuery>;
+export type GetLastRecipesLazyQueryHookResult = ReturnType<typeof useGetLastRecipesLazyQuery>;
+export type GetLastRecipesQueryResult = Apollo.QueryResult<GetLastRecipesQuery, GetLastRecipesQueryVariables>;
+export const GetPendingRecipesDocument = gql`
+    query getPendingRecipes {
+  pendingRecipes {
+    id
+    status
     title
     description
-    price
-    owner {
-      id
-      email
-      nickname
-      avatar
-      role
-    }
-    category {
-      id
-      name
-    }
-    createdAt
-    location
-    picture
-    tags {
-      id
-      name
-    }
-    updatedAt
   }
 }
     `;
 
 /**
- * __useAdQuery__
+ * __useGetPendingRecipesQuery__
  *
- * To run a query within a React component, call `useAdQuery` and pass it any options that fit your needs.
- * When your component renders, `useAdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPendingRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPendingRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAdQuery({
+ * const { data, loading, error } = useGetPendingRecipesQuery({
  *   variables: {
- *      adId: // value for 'adId'
  *   },
  * });
  */
-export function useAdQuery(baseOptions: Apollo.QueryHookOptions<AdQuery, AdQueryVariables>) {
+export function useGetPendingRecipesQuery(baseOptions?: Apollo.QueryHookOptions<GetPendingRecipesQuery, GetPendingRecipesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AdQuery, AdQueryVariables>(AdDocument, options);
+        return Apollo.useQuery<GetPendingRecipesQuery, GetPendingRecipesQueryVariables>(GetPendingRecipesDocument, options);
       }
-export function useAdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdQuery, AdQueryVariables>) {
+export function useGetPendingRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPendingRecipesQuery, GetPendingRecipesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AdQuery, AdQueryVariables>(AdDocument, options);
+          return Apollo.useLazyQuery<GetPendingRecipesQuery, GetPendingRecipesQueryVariables>(GetPendingRecipesDocument, options);
         }
-export type AdQueryHookResult = ReturnType<typeof useAdQuery>;
-export type AdLazyQueryHookResult = ReturnType<typeof useAdLazyQuery>;
-export type AdQueryResult = Apollo.QueryResult<AdQuery, AdQueryVariables>;
-export const AdsDocument = gql`
-    query Ads {
-  ads {
+export type GetPendingRecipesQueryHookResult = ReturnType<typeof useGetPendingRecipesQuery>;
+export type GetPendingRecipesLazyQueryHookResult = ReturnType<typeof useGetPendingRecipesLazyQuery>;
+export type GetPendingRecipesQueryResult = Apollo.QueryResult<GetPendingRecipesQuery, GetPendingRecipesQueryVariables>;
+export const GetPossibleRecipesDocument = gql`
+    query getPossibleRecipes {
+  recipesForUser {
     id
     title
-    price
-    picture
+    difficulty
+    duration
+    description
+    image
+    isVegetarian
   }
 }
     `;
 
 /**
- * __useAdsQuery__
+ * __useGetPossibleRecipesQuery__
  *
- * To run a query within a React component, call `useAdsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPossibleRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPossibleRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAdsQuery({
+ * const { data, loading, error } = useGetPossibleRecipesQuery({
  *   variables: {
  *   },
  * });
  */
-export function useAdsQuery(baseOptions?: Apollo.QueryHookOptions<AdsQuery, AdsQueryVariables>) {
+export function useGetPossibleRecipesQuery(baseOptions?: Apollo.QueryHookOptions<GetPossibleRecipesQuery, GetPossibleRecipesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AdsQuery, AdsQueryVariables>(AdsDocument, options);
+        return Apollo.useQuery<GetPossibleRecipesQuery, GetPossibleRecipesQueryVariables>(GetPossibleRecipesDocument, options);
       }
-export function useAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdsQuery, AdsQueryVariables>) {
+export function useGetPossibleRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPossibleRecipesQuery, GetPossibleRecipesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AdsQuery, AdsQueryVariables>(AdsDocument, options);
+          return Apollo.useLazyQuery<GetPossibleRecipesQuery, GetPossibleRecipesQueryVariables>(GetPossibleRecipesDocument, options);
         }
-export type AdsQueryHookResult = ReturnType<typeof useAdsQuery>;
-export type AdsLazyQueryHookResult = ReturnType<typeof useAdsLazyQuery>;
-export type AdsQueryResult = Apollo.QueryResult<AdsQuery, AdsQueryVariables>;
-export const CategoriesDocument = gql`
-    query Categories {
-  categories {
+export type GetPossibleRecipesQueryHookResult = ReturnType<typeof useGetPossibleRecipesQuery>;
+export type GetPossibleRecipesLazyQueryHookResult = ReturnType<typeof useGetPossibleRecipesLazyQuery>;
+export type GetPossibleRecipesQueryResult = Apollo.QueryResult<GetPossibleRecipesQuery, GetPossibleRecipesQueryVariables>;
+export const GetProductsDocument = gql`
+    query getProducts {
+  products {
     id
     name
   }
@@ -455,259 +448,170 @@ export const CategoriesDocument = gql`
     `;
 
 /**
- * __useCategoriesQuery__
+ * __useGetProductsQuery__
  *
- * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
- * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCategoriesQuery({
+ * const { data, loading, error } = useGetProductsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+export function useGetProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        return Apollo.useQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
       }
-export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+export function useGetProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsQuery, GetProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+          return Apollo.useLazyQuery<GetProductsQuery, GetProductsQueryVariables>(GetProductsDocument, options);
         }
-export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
-export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
-export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
-export const CreateAdDocument = gql`
-    mutation createAd($data: NewAdInput!) {
-  createAd(data: $data) {
+export type GetProductsQueryHookResult = ReturnType<typeof useGetProductsQuery>;
+export type GetProductsLazyQueryHookResult = ReturnType<typeof useGetProductsLazyQuery>;
+export type GetProductsQueryResult = Apollo.QueryResult<GetProductsQuery, GetProductsQueryVariables>;
+export const GetRecipeDetailsDocument = gql`
+    query getRecipeDetails($recipeId: Float!) {
+  recipe(id: $recipeId) {
     id
-  }
-}
-    `;
-export type CreateAdMutationFn = Apollo.MutationFunction<CreateAdMutation, CreateAdMutationVariables>;
-
-/**
- * __useCreateAdMutation__
- *
- * To run a mutation, you first call `useCreateAdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateAdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createAdMutation, { data, loading, error }] = useCreateAdMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useCreateAdMutation(baseOptions?: Apollo.MutationHookOptions<CreateAdMutation, CreateAdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateAdMutation, CreateAdMutationVariables>(CreateAdDocument, options);
+    image
+    status
+    recipeProducts {
+      id
+      quantity
+      product {
+        name
+        unit
       }
-export type CreateAdMutationHookResult = ReturnType<typeof useCreateAdMutation>;
-export type CreateAdMutationResult = Apollo.MutationResult<CreateAdMutation>;
-export type CreateAdMutationOptions = Apollo.BaseMutationOptions<CreateAdMutation, CreateAdMutationVariables>;
-export const CreateCategoryDocument = gql`
-    mutation createCategory($data: NewCategoryInput!) {
-  createCategory(data: $data) {
-    id
-    name
-  }
-}
-    `;
-export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
-
-/**
- * __useCreateCategoryMutation__
- *
- * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
-      }
-export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
-export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
-export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
-export const CreateTagDocument = gql`
-    mutation CreateTag($data: NewTagInput!) {
-  createTag(data: $data) {
-    id
-  }
-}
-    `;
-export type CreateTagMutationFn = Apollo.MutationFunction<CreateTagMutation, CreateTagMutationVariables>;
-
-/**
- * __useCreateTagMutation__
- *
- * To run a mutation, you first call `useCreateTagMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateTagMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createTagMutation, { data, loading, error }] = useCreateTagMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useCreateTagMutation(baseOptions?: Apollo.MutationHookOptions<CreateTagMutation, CreateTagMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateTagMutation, CreateTagMutationVariables>(CreateTagDocument, options);
-      }
-export type CreateTagMutationHookResult = ReturnType<typeof useCreateTagMutation>;
-export type CreateTagMutationResult = Apollo.MutationResult<CreateTagMutation>;
-export type CreateTagMutationOptions = Apollo.BaseMutationOptions<CreateTagMutation, CreateTagMutationVariables>;
-export const DeleteAdDocument = gql`
-    mutation DeleteAd($adId: Float!) {
-  deleteAd(adId: $adId)
-}
-    `;
-export type DeleteAdMutationFn = Apollo.MutationFunction<DeleteAdMutation, DeleteAdMutationVariables>;
-
-/**
- * __useDeleteAdMutation__
- *
- * To run a mutation, you first call `useDeleteAdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteAdMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteAdMutation, { data, loading, error }] = useDeleteAdMutation({
- *   variables: {
- *      adId: // value for 'adId'
- *   },
- * });
- */
-export function useDeleteAdMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAdMutation, DeleteAdMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteAdMutation, DeleteAdMutationVariables>(DeleteAdDocument, options);
-      }
-export type DeleteAdMutationHookResult = ReturnType<typeof useDeleteAdMutation>;
-export type DeleteAdMutationResult = Apollo.MutationResult<DeleteAdMutation>;
-export type DeleteAdMutationOptions = Apollo.BaseMutationOptions<DeleteAdMutation, DeleteAdMutationVariables>;
-export const DeleteCategoryDocument = gql`
-    mutation DeleteCategory($categoryId: Float!) {
-  deleteCategory(categoryId: $categoryId)
-}
-    `;
-export type DeleteCategoryMutationFn = Apollo.MutationFunction<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
-
-/**
- * __useDeleteCategoryMutation__
- *
- * To run a mutation, you first call `useDeleteCategoryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteCategoryMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteCategoryMutation, { data, loading, error }] = useDeleteCategoryMutation({
- *   variables: {
- *      categoryId: // value for 'categoryId'
- *   },
- * });
- */
-export function useDeleteCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(DeleteCategoryDocument, options);
-      }
-export type DeleteCategoryMutationHookResult = ReturnType<typeof useDeleteCategoryMutation>;
-export type DeleteCategoryMutationResult = Apollo.MutationResult<DeleteCategoryMutation>;
-export type DeleteCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>;
-export const DeleteTagDocument = gql`
-    mutation DeleteTag($tagId: Float!) {
-  deleteTag(tagId: $tagId)
-}
-    `;
-export type DeleteTagMutationFn = Apollo.MutationFunction<DeleteTagMutation, DeleteTagMutationVariables>;
-
-/**
- * __useDeleteTagMutation__
- *
- * To run a mutation, you first call `useDeleteTagMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteTagMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteTagMutation, { data, loading, error }] = useDeleteTagMutation({
- *   variables: {
- *      tagId: // value for 'tagId'
- *   },
- * });
- */
-export function useDeleteTagMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTagMutation, DeleteTagMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteTagMutation, DeleteTagMutationVariables>(DeleteTagDocument, options);
-      }
-export type DeleteTagMutationHookResult = ReturnType<typeof useDeleteTagMutation>;
-export type DeleteTagMutationResult = Apollo.MutationResult<DeleteTagMutation>;
-export type DeleteTagMutationOptions = Apollo.BaseMutationOptions<DeleteTagMutation, DeleteTagMutationVariables>;
-export const TagsDocument = gql`
-    query Tags {
-  tags {
-    id
-    name
+    }
+    user {
+      id
+      lastname
+      firstname
+    }
+    content
+    description
+    difficulty
+    duration
+    isVegetarian
+    title
   }
 }
     `;
 
 /**
- * __useTagsQuery__
+ * __useGetRecipeDetailsQuery__
  *
- * To run a query within a React component, call `useTagsQuery` and pass it any options that fit your needs.
- * When your component renders, `useTagsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetRecipeDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRecipeDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useTagsQuery({
+ * const { data, loading, error } = useGetRecipeDetailsQuery({
+ *   variables: {
+ *      recipeId: // value for 'recipeId'
+ *   },
+ * });
+ */
+export function useGetRecipeDetailsQuery(baseOptions: Apollo.QueryHookOptions<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>(GetRecipeDetailsDocument, options);
+      }
+export function useGetRecipeDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>(GetRecipeDetailsDocument, options);
+        }
+export type GetRecipeDetailsQueryHookResult = ReturnType<typeof useGetRecipeDetailsQuery>;
+export type GetRecipeDetailsLazyQueryHookResult = ReturnType<typeof useGetRecipeDetailsLazyQuery>;
+export type GetRecipeDetailsQueryResult = Apollo.QueryResult<GetRecipeDetailsQuery, GetRecipeDetailsQueryVariables>;
+export const GetUserProductsDocument = gql`
+    query getUserProducts {
+  user {
+    userProducts {
+      id
+      quantity
+      product {
+        id
+        name
+        unit
+        icon
+      }
+    }
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetUserProductsQuery__
+ *
+ * To run a query within a React component, call `useGetUserProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserProductsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useTagsQuery(baseOptions?: Apollo.QueryHookOptions<TagsQuery, TagsQueryVariables>) {
+export function useGetUserProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetUserProductsQuery, GetUserProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<TagsQuery, TagsQueryVariables>(TagsDocument, options);
+        return Apollo.useQuery<GetUserProductsQuery, GetUserProductsQueryVariables>(GetUserProductsDocument, options);
       }
-export function useTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagsQuery, TagsQueryVariables>) {
+export function useGetUserProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserProductsQuery, GetUserProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<TagsQuery, TagsQueryVariables>(TagsDocument, options);
+          return Apollo.useLazyQuery<GetUserProductsQuery, GetUserProductsQueryVariables>(GetUserProductsDocument, options);
         }
-export type TagsQueryHookResult = ReturnType<typeof useTagsQuery>;
-export type TagsLazyQueryHookResult = ReturnType<typeof useTagsLazyQuery>;
-export type TagsQueryResult = Apollo.QueryResult<TagsQuery, TagsQueryVariables>;
+export type GetUserProductsQueryHookResult = ReturnType<typeof useGetUserProductsQuery>;
+export type GetUserProductsLazyQueryHookResult = ReturnType<typeof useGetUserProductsLazyQuery>;
+export type GetUserProductsQueryResult = Apollo.QueryResult<GetUserProductsQuery, GetUserProductsQueryVariables>;
+export const GetUserRecipesDocument = gql`
+    query GetUserRecipes {
+  userRecipes {
+    id
+    title
+    status
+    statusReason
+    difficulty
+    description
+  }
+}
+    `;
+
+/**
+ * __useGetUserRecipesQuery__
+ *
+ * To run a query within a React component, call `useGetUserRecipesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserRecipesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserRecipesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserRecipesQuery(baseOptions?: Apollo.QueryHookOptions<GetUserRecipesQuery, GetUserRecipesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserRecipesQuery, GetUserRecipesQueryVariables>(GetUserRecipesDocument, options);
+      }
+export function useGetUserRecipesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserRecipesQuery, GetUserRecipesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserRecipesQuery, GetUserRecipesQueryVariables>(GetUserRecipesDocument, options);
+        }
+export type GetUserRecipesQueryHookResult = ReturnType<typeof useGetUserRecipesQuery>;
+export type GetUserRecipesLazyQueryHookResult = ReturnType<typeof useGetUserRecipesLazyQuery>;
+export type GetUserRecipesQueryResult = Apollo.QueryResult<GetUserRecipesQuery, GetUserRecipesQueryVariables>;
 export const LoginDocument = gql`
     mutation Login($data: LoginUserInput!) {
   login(data: $data)
@@ -774,15 +678,9 @@ export const ProfileDocument = gql`
   profile {
     id
     email
-    nickname
-    avatar
+    firstname
+    lastname
     role
-    ads {
-      id
-      title
-      picture
-      price
-    }
   }
 }
     `;
@@ -813,54 +711,11 @@ export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Pr
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
-export const SearchAdsDocument = gql`
-    query SearchAds($title: String, $categoryId: Int, $ownerId: Int, $tagsId: String) {
-  ads(title: $title, categoryId: $categoryId, ownerId: $ownerId, tagsId: $tagsId) {
-    id
-    picture
-    price
-    title
-  }
-}
-    `;
-
-/**
- * __useSearchAdsQuery__
- *
- * To run a query within a React component, call `useSearchAdsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchAdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchAdsQuery({
- *   variables: {
- *      title: // value for 'title'
- *      categoryId: // value for 'categoryId'
- *      ownerId: // value for 'ownerId'
- *      tagsId: // value for 'tagsId'
- *   },
- * });
- */
-export function useSearchAdsQuery(baseOptions?: Apollo.QueryHookOptions<SearchAdsQuery, SearchAdsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchAdsQuery, SearchAdsQueryVariables>(SearchAdsDocument, options);
-      }
-export function useSearchAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchAdsQuery, SearchAdsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchAdsQuery, SearchAdsQueryVariables>(SearchAdsDocument, options);
-        }
-export type SearchAdsQueryHookResult = ReturnType<typeof useSearchAdsQuery>;
-export type SearchAdsLazyQueryHookResult = ReturnType<typeof useSearchAdsLazyQuery>;
-export type SearchAdsQueryResult = Apollo.QueryResult<SearchAdsQuery, SearchAdsQueryVariables>;
 export const SignupDocument = gql`
     mutation Signup($data: NewUserInput!) {
   signUp(data: $data) {
     id
     email
-    nickname
-    avatar
     role
   }
 }
@@ -891,142 +746,73 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
-export const UpdateAdDocument = gql`
-    mutation UpdateAd($data: UpdateAdInput!, $adId: Float!) {
-  updateAd(data: $data, adId: $adId) {
+export const UpdateRecipeStatusDocument = gql`
+    mutation UpdateRecipeStatus($status: String!, $updateRecipeStatusId: Float!) {
+  updateRecipeStatus(status: $status, id: $updateRecipeStatusId) {
     id
   }
 }
     `;
-export type UpdateAdMutationFn = Apollo.MutationFunction<UpdateAdMutation, UpdateAdMutationVariables>;
+export type UpdateRecipeStatusMutationFn = Apollo.MutationFunction<UpdateRecipeStatusMutation, UpdateRecipeStatusMutationVariables>;
 
 /**
- * __useUpdateAdMutation__
+ * __useUpdateRecipeStatusMutation__
  *
- * To run a mutation, you first call `useUpdateAdMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateAdMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateRecipeStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRecipeStatusMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateAdMutation, { data, loading, error }] = useUpdateAdMutation({
+ * const [updateRecipeStatusMutation, { data, loading, error }] = useUpdateRecipeStatusMutation({
  *   variables: {
- *      data: // value for 'data'
- *      adId: // value for 'adId'
+ *      status: // value for 'status'
+ *      updateRecipeStatusId: // value for 'updateRecipeStatusId'
  *   },
  * });
  */
-export function useUpdateAdMutation(baseOptions?: Apollo.MutationHookOptions<UpdateAdMutation, UpdateAdMutationVariables>) {
+export function useUpdateRecipeStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRecipeStatusMutation, UpdateRecipeStatusMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateAdMutation, UpdateAdMutationVariables>(UpdateAdDocument, options);
+        return Apollo.useMutation<UpdateRecipeStatusMutation, UpdateRecipeStatusMutationVariables>(UpdateRecipeStatusDocument, options);
       }
-export type UpdateAdMutationHookResult = ReturnType<typeof useUpdateAdMutation>;
-export type UpdateAdMutationResult = Apollo.MutationResult<UpdateAdMutation>;
-export type UpdateAdMutationOptions = Apollo.BaseMutationOptions<UpdateAdMutation, UpdateAdMutationVariables>;
-export const UpdateCategoryDocument = gql`
-    mutation UpdateCategory($data: UpdateCategoryInput!, $categoryId: Float!) {
-  updateCategory(data: $data, categoryId: $categoryId) {
-    id
+export type UpdateRecipeStatusMutationHookResult = ReturnType<typeof useUpdateRecipeStatusMutation>;
+export type UpdateRecipeStatusMutationResult = Apollo.MutationResult<UpdateRecipeStatusMutation>;
+export type UpdateRecipeStatusMutationOptions = Apollo.BaseMutationOptions<UpdateRecipeStatusMutation, UpdateRecipeStatusMutationVariables>;
+export const UpdateUserProductDocument = gql`
+    mutation UpdateUserProduct($data: UserProductInput!) {
+  updateUserProduct(data: $data) {
+    quantity
+    product {
+      id
+    }
   }
 }
     `;
-export type UpdateCategoryMutationFn = Apollo.MutationFunction<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
+export type UpdateUserProductMutationFn = Apollo.MutationFunction<UpdateUserProductMutation, UpdateUserProductMutationVariables>;
 
 /**
- * __useUpdateCategoryMutation__
+ * __useUpdateUserProductMutation__
  *
- * To run a mutation, you first call `useUpdateCategoryMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateCategoryMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateUserProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProductMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateCategoryMutation, { data, loading, error }] = useUpdateCategoryMutation({
- *   variables: {
- *      data: // value for 'data'
- *      categoryId: // value for 'categoryId'
- *   },
- * });
- */
-export function useUpdateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCategoryMutation, UpdateCategoryMutationVariables>(UpdateCategoryDocument, options);
-      }
-export type UpdateCategoryMutationHookResult = ReturnType<typeof useUpdateCategoryMutation>;
-export type UpdateCategoryMutationResult = Apollo.MutationResult<UpdateCategoryMutation>;
-export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateCategoryMutation, UpdateCategoryMutationVariables>;
-export const UpdateProfileDocument = gql`
-    mutation UpdateProfile($data: UpdateUserInput!) {
-  updateProfile(data: $data) {
-    id
-    email
-    nickname
-    avatar
-    role
-  }
-}
-    `;
-export type UpdateProfileMutationFn = Apollo.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>;
-
-/**
- * __useUpdateProfileMutation__
- *
- * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ * const [updateUserProductMutation, { data, loading, error }] = useUpdateUserProductMutation({
  *   variables: {
  *      data: // value for 'data'
  *   },
  * });
  */
-export function useUpdateProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProfileMutation, UpdateProfileMutationVariables>) {
+export function useUpdateUserProductMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProductMutation, UpdateUserProductMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument, options);
+        return Apollo.useMutation<UpdateUserProductMutation, UpdateUserProductMutationVariables>(UpdateUserProductDocument, options);
       }
-export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
-export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
-export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
-export const UpdateTagDocument = gql`
-    mutation UpdateTag($data: UpdateTagInput!, $tagId: Float!) {
-  updateTag(data: $data, tagId: $tagId) {
-    id
-  }
-}
-    `;
-export type UpdateTagMutationFn = Apollo.MutationFunction<UpdateTagMutation, UpdateTagMutationVariables>;
-
-/**
- * __useUpdateTagMutation__
- *
- * To run a mutation, you first call `useUpdateTagMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateTagMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateTagMutation, { data, loading, error }] = useUpdateTagMutation({
- *   variables: {
- *      data: // value for 'data'
- *      tagId: // value for 'tagId'
- *   },
- * });
- */
-export function useUpdateTagMutation(baseOptions?: Apollo.MutationHookOptions<UpdateTagMutation, UpdateTagMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateTagMutation, UpdateTagMutationVariables>(UpdateTagDocument, options);
-      }
-export type UpdateTagMutationHookResult = ReturnType<typeof useUpdateTagMutation>;
-export type UpdateTagMutationResult = Apollo.MutationResult<UpdateTagMutation>;
-export type UpdateTagMutationOptions = Apollo.BaseMutationOptions<UpdateTagMutation, UpdateTagMutationVariables>;
+export type UpdateUserProductMutationHookResult = ReturnType<typeof useUpdateUserProductMutation>;
+export type UpdateUserProductMutationResult = Apollo.MutationResult<UpdateUserProductMutation>;
+export type UpdateUserProductMutationOptions = Apollo.BaseMutationOptions<UpdateUserProductMutation, UpdateUserProductMutationVariables>;

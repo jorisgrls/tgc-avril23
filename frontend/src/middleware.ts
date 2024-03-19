@@ -30,7 +30,6 @@ async function checkToken(token: string | undefined, request: NextRequest) {
 
   try {
     const payload = await verify(token);
-
     if (payload?.userId) {
       return NextResponse.next();
     }
@@ -42,5 +41,12 @@ async function checkToken(token: string | undefined, request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/newAd', '/profile', '/editAd/:path*'],
+  matcher: [
+    '/',
+    '/mes-recettes',
+    '/mon-frigo',
+    '/recettes/:path*',
+    '/mes-recettes/:path*',
+    '/recettes-a-valider',
+  ],
 };

@@ -1,0 +1,8 @@
+query getPendingRecipes {
+  pendingRecipes {
+    id
+    status
+    title
+    description
+  }
+}

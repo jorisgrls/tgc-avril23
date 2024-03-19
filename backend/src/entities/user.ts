@@ -4,15 +4,16 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-} from 'typeorm';
-import { Length, IsEmail, IsUrl } from 'class-validator';
-import { ObjectType, Field, Int, InputType } from 'type-graphql';
-import { Ad } from './ad';
-import { hash, verify } from 'argon2';
+} from "typeorm";
+import { ObjectType, Field, Int, InputType } from "type-graphql";
+import { Recipe } from "./recipe";
+import { UserProduct } from "./userProduct";
+import { IsEmail, Length } from "class-validator";
+import { hash, verify } from "argon2";
 
 export enum UserRole {
-  ADMIN = 'admin',
-  VISITOR = 'visitor',
+  ADMIN = "ADMIN",
+  VISITOR = "VISITOR",
 }
 
 @Entity()
@@ -28,25 +29,29 @@ export class User extends BaseEntity {
 
   @Column()
   @Field()
-  nickname: string;
-
-  @Column({
-    default:
-      'https://icons.veryicon.com/png/o/miscellaneous/standard/avatar-15.png',
-  })
-  @Field()
-  avatar: string;
+  firstname: string;
 
   @Column()
+  @Field()
+  lastname: string;
+
+  @Column()
+  @Field()
   hashedPassword: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.VISITOR })
+  @Column({ type: "enum", enum: UserRole, default: UserRole.VISITOR })
   @Field()
   role: UserRole;
 
-  @Field(() => [Ad])
-  @OneToMany(() => Ad, (ad) => ad.owner)
-  ads: Ad[];
+  @OneToMany(() => Recipe, (recipe) => recipe.user, { cascade: true })
+  @Field(() => [Recipe])
+  recipes: Recipe[];
+
+  @OneToMany(() => UserProduct, (userProduct) => userProduct.user, {
+    cascade: true,
+  })
+  @Field(() => [UserProduct])
+  userProducts: UserProduct[];
 }
 
 @InputType()
@@ -61,20 +66,12 @@ export class NewUserInput {
   password: string;
 
   @Field()
-  @Length(3, 100)
-  nickname: string;
-}
+  @Length(3, 50)
+  firstname: string;
 
-@InputType()
-export class UpdateUserInput {
-  @Field({ nullable: true })
-  @Length(3, 100)
-  nickname: string;
-
-  @Field({ nullable: true })
-  @IsUrl()
-  @Length(3, 255)
-  avatar: string;
+  @Field()
+  @Length(3, 50)
+  lastname: string;
 }
 
 @InputType()

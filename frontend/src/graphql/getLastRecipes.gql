@@ -1,0 +1,11 @@
+query getLastRecipes {
+  lastRecipes {
+    id
+    title
+    difficulty
+    duration
+    description
+    image
+    isVegetarian
+  }
+}

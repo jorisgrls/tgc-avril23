@@ -1,85 +1,31 @@
-import React, { FormEvent } from 'react';
-import Layout from '@/components/Layout';
-import { useLoginMutation } from '@/graphql/generated/schema';
-import { useProfileQuery } from '@/graphql/generated/schema';
-import { useLogoutMutation } from '@/graphql/generated/schema';
+import { useState } from "react";
+import LoginForm from "@/components/unloggedPages/login";
+import RegisterForm from "@/components/unloggedPages/register";
+import Image from "next/image";
+import background from "@/assets/background.webp";
+import logo from "@/assets/logo.png";
 
-export default function Login() {
-  const [loginUser] = useLoginMutation();
-  const { data, client } = useProfileQuery({ errorPolicy: 'ignore' });
-  const [logoutUser] = useLogoutMutation();
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const formJSON: any = Object.fromEntries(formData.entries());
-    await loginUser({ variables: { data: formJSON } });
-    client.resetStore();
-  };
-
-  const onPressLogout = async () => {
-    await logoutUser();
-    client.resetStore();
-  };
-
+const Login = () => {
+  const [authAction, setAuthAction] = useState<"login" | "register">("login");
   return (
-    <Layout title={data?.profile ? 'Se déconnecter' : 'Se connecter'}>
-      {data?.profile ? (
-        <div className="pt-4">
-          <p>Connecté en tant que {data.profile.email}</p>
-          <button
-            className="btn btn-warning w-full mt-4"
-            onClick={onPressLogout}
-          >
-            Se déconnecter
-          </button>
-        </div>
-      ) : (
-        <>
-          <h1 className="text-xl pt-4 pb-4">Se connecter</h1>
-          <form onSubmit={handleSubmit} className="pb-12">
-            <div className="flex flex-wrap gap-6 mb-3">
-              <div className="form-control w-full max-w-xs">
-                <label className="label" htmlFor="email">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  required
-                  type="text"
-                  minLength={3}
-                  name="email"
-                  id="email"
-                  placeholder="email@example.com"
-                  className="input input-bordered w-full max-w-xs"
-                />
-              </div>
-
-              <div className="flex flex-wrap gap-6 mb-3">
-                <div className="flex flex-wrap gap-6 mb-3">
-                  <div className="form-control w-full max-w-xs">
-                    <label className="label" htmlFor="password">
-                      <span className="label-text">Mot de passe</span>
-                    </label>
-                    <input
-                      required
-                      type="password"
-                      minLength={8}
-                      name="password"
-                      id="password"
-                      placeholder="********"
-                      className="input input-bordered w-full max-w-xs"
-                    />
-                  </div>
-                </div>
-
-                <button className="btn btn-primary text-white mt-12 w-full">
-                  Se connecter
-                </button>
-              </div>
-            </div>
-          </form>
-        </>
-      )}
-    </Layout>
+    <div className="container:2xl column-2 flex h-screen">
+      <div className="hidden w-1/2 justify-center rounded-r-2xl lg:flex overflow-hidden">
+        <Image
+          src={background}
+          width={3840}
+          height={5760}
+          alt="image de fond d'un cuisinier"
+        />
+      </div>
+      <div className="flex w-full flex-col items-center justify-center gap-6 p-4 lg:w-1/2">
+        <Image src={logo} height={49} width={83} alt="logo" />
+        {authAction === "login" && <LoginForm setAuthAction={setAuthAction} />}
+        {authAction === "register" && (
+          <RegisterForm setAuthAction={setAuthAction} />
+        )}
+      </div>
+    </div>
   );
-}
+};
+
+export default Login;
