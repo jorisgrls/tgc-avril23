@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <Layout title="Accueil - TGC">
-      <h1 className="pt-4 pb-4 text-lg">Annonces Récentesssss</h1>
+      <h1 className="pt-4 pb-4 text-lg">Annonces Récentesssss omg</h1>
       {typeof data === 'undefined' ? (
         'chargement'
       ) : (
