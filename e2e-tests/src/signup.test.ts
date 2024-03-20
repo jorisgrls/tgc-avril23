@@ -7,7 +7,6 @@ test.beforeEach(clearDB);
 test.afterAll(disconnect);
 
 test('can sign up with correct info', async ({ page }) => {
-  await page.goto('/login');
   await page.getByTestId('button-signup').click();
   await page.getByTestId('signup-firstname').fill('John');
   await page.getByTestId('signup-lastname').fill('James');
