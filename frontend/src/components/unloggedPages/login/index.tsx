@@ -1,47 +1,42 @@
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  useLoginMutation,
-  useLogoutMutation,
-  useProfileQuery,
-} from "@/graphql/generated/schema";
-import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useLoginMutation, useProfileQuery } from '@/graphql/generated/schema';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 interface LoginFormProps {
-  setAuthAction: (action: "login" | "register") => void;
+  setAuthAction: (action: 'login' | 'register') => void;
 }
 
 export const LoginForm = ({ setAuthAction }: LoginFormProps) => {
   const router = useRouter();
   const [loginUser, { loading }] = useLoginMutation();
   const { data, client } = useProfileQuery({
-    errorPolicy: "ignore",
-    onCompleted: () => router.push("/"),
+    errorPolicy: 'ignore',
+    onCompleted: () => router.push('/'),
   });
   const formSchema = z.object({
     email: z.string().email({ message: "L'email n'est pas valide" }),
     password: z
       .string()
-      .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
+      .min(5, 'Le mot de passe doit contenir au moins 5 caractères'),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -49,11 +44,11 @@ export const LoginForm = ({ setAuthAction }: LoginFormProps) => {
     await loginUser({
       variables: { data: { email: values.email, password: values.password } },
       onCompleted: () => {
-        console.log("login success");
-        router.push("/");
+        console.log('login success');
+        router.push('/');
       },
       onError: (error) => {
-        toast.error("Les informations de connexion sont incorrectes");
+        toast.error('Les informations de connexion sont incorrectes');
         form.reset();
       },
     });
@@ -111,9 +106,11 @@ export const LoginForm = ({ setAuthAction }: LoginFormProps) => {
         </Form>
       </div>
       <div className="flex cursor-pointer justify-center">
-        <p className="text-sm" onClick={() => setAuthAction("register")}>
-          Pas encore de compte ?{" "}
-          <span className="text-blue-800">Inscrivez-vous.</span>
+        <p className="text-sm" onClick={() => setAuthAction('register')}>
+          Pas encore de compte ?{' '}
+          <span data-testid="button-signup" className="text-blue-800">
+            Inscrivez-vous.
+          </span>
         </p>
       </div>
     </div>

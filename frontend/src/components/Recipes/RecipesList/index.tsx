@@ -154,7 +154,6 @@ const RecipesList = () => {
             <RecipeCard
               showDescription={false}
               hoverScale={true}
-              key={recipe.id}
               recipe={recipe}
             />
           ))}

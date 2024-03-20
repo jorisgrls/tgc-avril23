@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -9,17 +9,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   useLoginMutation,
   useSignupMutation,
-} from "@/graphql/generated/schema";
-import toast from "react-hot-toast";
-import { useRouter } from "next/router";
+} from '@/graphql/generated/schema';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 interface RegisterFormProps {
-  setAuthAction: (action: "login" | "register") => void;
+  setAuthAction: (action: 'login' | 'register') => void;
 }
 export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
   const [loginUser] = useLoginMutation();
@@ -30,20 +30,20 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
     email: z.string().email({ message: "L'email n'est pas valide" }),
     password: z
       .string()
-      .min(8, "Le mot de passe doit contenir au moins 8 caractères"),
+      .min(8, 'Le mot de passe doit contenir au moins 8 caractères'),
     firstname: z
       .string()
-      .min(3, "Le prénom doit contenir au moins 3 caractères"),
-    lastname: z.string().min(3, "Le nom doit contenir au moins 3 caractères"),
+      .min(3, 'Le prénom doit contenir au moins 3 caractères'),
+    lastname: z.string().min(3, 'Le nom doit contenir au moins 3 caractères'),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      firstname: "",
-      lastname: "",
+      email: '',
+      password: '',
+      firstname: '',
+      lastname: '',
     },
   });
 
@@ -57,10 +57,10 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
           lastname: values.lastname,
         },
       },
-      onCompleted: () => toast.success("Votre compte a bien été créé"),
+      onCompleted: () => toast.success('Votre compte a bien été créé'),
       onError: (error) => {
         toast.error(
-          "Une erreur est survenue lors de la création de votre compte"
+          'Une erreur est survenue lors de la création de votre compte'
         );
         console.log(error);
       },
@@ -70,10 +70,10 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
         data: { email: values.email, password: values.password },
       },
       onCompleted: () => {
-        router.push("/");
+        router.push('/');
       },
       onError: () => {
-        toast.error("Les informations de connexion sont incorrectes");
+        toast.error('Les informations de connexion sont incorrectes');
         form.reset();
       },
     });
@@ -99,7 +99,12 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <Input type="text" {...field} placeholder="Prénom" />
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="Prénom"
+                      data-testid="signup-firstname"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,7 +116,12 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <Input type="text" {...field} placeholder="Nom" />
+                    <Input
+                      type="text"
+                      {...field}
+                      placeholder="Nom"
+                      data-testid="signup-lastname"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -123,7 +133,12 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <Input type="email" {...field} placeholder="Email" />
+                    <Input
+                      type="email"
+                      {...field}
+                      placeholder="Email"
+                      data-testid="signup-email"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -139,6 +154,7 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
                       {...field}
                       type="password"
                       placeholder="Mot de passe"
+                      data-testid="signup-password"
                     />
                   </FormControl>
                   <FormMessage />
@@ -152,8 +168,8 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
         </Form>
       </div>
       <div className="flex cursor-pointer justify-center">
-        <p className="text-sm" onClick={() => setAuthAction("login")}>
-          Vous posséder un compte ?{" "}
+        <p className="text-sm" onClick={() => setAuthAction('login')}>
+          Vous posséder un compte ?{' '}
           <span className="text-blue-800">Connectez-vous.</span>
         </p>
       </div>

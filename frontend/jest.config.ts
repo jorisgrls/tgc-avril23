@@ -1,3 +1,5 @@
+import path from 'path';
+
 const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
@@ -19,6 +21,13 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   testEnvironment: 'jsdom',
   testMatch: ['**/__tests__/**/*.test.ts+(x)'],
+  moduleNameMapper: {
+    '^@/graphql/generated/schema$': path.resolve(
+      __dirname,
+      './src/graphql/generated/schema'
+    ),
+    // Add other moduleNameMappers as needed
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
