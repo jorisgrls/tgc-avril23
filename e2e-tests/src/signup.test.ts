@@ -7,7 +7,7 @@ test.beforeEach(clearDB);
 test.afterAll(disconnect);
 
 test('can sign up with correct info', async ({ page }) => {
-  await page.getByTestId('button-signup').click();
+  await page.getByRole('button', { name: 'Inscrivez-vous.' }).click();
   await page.getByTestId('signup-firstname').fill('John');
   await page.getByTestId('signup-lastname').fill('James');
   await page.getByTestId('signup-email').fill('johnjames@dev.com');

@@ -108,9 +108,9 @@ export const LoginForm = ({ setAuthAction }: LoginFormProps) => {
       <div className="flex cursor-pointer justify-center">
         <p className="text-sm" onClick={() => setAuthAction('register')}>
           Pas encore de compte ?{' '}
-          <span data-testid="button-signup" className="text-blue-800">
+          <button data-testid="button-signup" className="text-blue-800">
             Inscrivez-vous.
-          </span>
+          </button>
         </p>
       </div>
     </div>
