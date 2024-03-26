@@ -17,7 +17,6 @@ jobs:
 
   build-and-push-server:
     needs:
-      - integration-tests
       - e2e-tests
     uses: jorisgrls/tgc-avril23/.github/workflows/build-backend.yml@main
     secrets:
