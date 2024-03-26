@@ -9,11 +9,8 @@ jobs:
   client-tests:
     uses: jorisgrls/tgc-avril23/.github/workflows/test-front.yml@main
 
-  # e2e-tests:
-  #   uses: jorisgrls/tgc-avril23/.github/workflows/e2e-tests.yml@main
-
-  # integration-tests:
-  #   uses: jorisgrls/tgc-avril23/.github/workflows/integration-tests.yml@main
+  e2e-tests:
+    uses: jorisgrls/tgc-avril23/.github/workflows/e2e-tests.yml@main
 
   build-and-push-server:
     needs:
