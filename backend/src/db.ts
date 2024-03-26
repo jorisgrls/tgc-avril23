@@ -15,7 +15,7 @@ const db = new DataSource({
   password: DB_PASS,
   database: DB_NAME,
   entities: [Product, Recipe, User, RecipeProduct, UserProduct],
-  synchronize: env.NODE_ENV !== 'production',
+  synchronize: env.NODE_ENV === 'production',
   logging: env.NODE_ENV !== 'test',
 });
 
