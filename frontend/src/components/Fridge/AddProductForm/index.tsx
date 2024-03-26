@@ -1,18 +1,19 @@
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { formSchema } from "./addProductForm.schema";
-import IngredientsList from "@/components/Recipes/AddRecipes/RecipeIngredients/IngredientsList";
-import { useAddUserProductMutation } from "@/graphql/generated/schema";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { formSchema } from './addProductForm.schema';
+import IngredientsList from '@/components/Recipes/AddRecipes/RecipeIngredients/IngredientsList';
+import { useAddUserProductMutation } from '@/graphql/generated/schema';
+import toast from 'react-hot-toast';
 interface CreateGroupProps {
   setShowDialog: (value: boolean) => void;
 }
@@ -22,8 +23,8 @@ const AddProductForm = ({ setShowDialog }: CreateGroupProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      product: "",
-      quantity: "",
+      product: '',
+      quantity: '',
     },
   });
 
@@ -35,7 +36,13 @@ const AddProductForm = ({ setShowDialog }: CreateGroupProps) => {
           quantity: parseInt(values.quantity, 10),
         },
       },
-      refetchQueries: ["getUserProducts"],
+      refetchQueries: ['getUserProducts'],
+      onCompleted: () => {
+        toast.success('Produit ajouté avec succès');
+      },
+      onError: (error) => {
+        toast.error("Le produit n'a pas pu être ajouté");
+      },
     });
     setShowDialog(false);
   };

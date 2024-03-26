@@ -22,6 +22,7 @@ const IngredientsList = ({ value, onChange, className }: any) => {
   const [open, setOpen] = useState(false);
   if (loading) return <div>loading...</div>;
   if (error) return <div>error...</div>;
+  console.log(data?.products);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

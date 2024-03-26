@@ -27,11 +27,11 @@ export class User extends BaseEntity {
   @Field()
   email: string;
 
-  @Column({ nullable: true })
+  @Column()
   @Field()
   firstname: string;
 
-  @Column({ nullable: true })
+  @Column()
   @Field()
   lastname: string;
 

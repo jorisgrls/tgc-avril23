@@ -7,6 +7,7 @@ import { User } from './entities/user';
 import ProductResolver from './resolvers/productResolver';
 import RecipeResolver from './resolvers/recipeResolver';
 import UserProductResolver from './resolvers/userProductResolver';
+import { RecipeProduct } from './entities/recipeProduct';
 
 export default buildSchema({
   resolvers: [
@@ -14,14 +15,13 @@ export default buildSchema({
     UserResolver,
     RecipeResolver,
     UserProductResolver,
+    RecipeProduct,
   ],
   authChecker: async ({ root, args, context, info }, roles = []) => {
     const cookies = cookie.parse(context.req.headers.cookie ?? '');
-
     const token =
       cookies.token ??
       context.req.headers['authorization']?.split('Bearer ')?.[1];
-
     try {
       const decoded = jwt.verify(token, env.JWT_PRIVATE_KEY) as any;
       const id = decoded.userId;

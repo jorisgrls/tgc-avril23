@@ -6,15 +6,15 @@ import {
   CreateDateColumn,
   ManyToOne,
   OneToMany,
-} from "typeorm";
-import { User } from "./user";
-import { ObjectType, Field, Int, InputType } from "type-graphql";
-import { RecipeProduct } from "./recipeProduct";
+} from 'typeorm';
+import { User } from './user';
+import { ObjectType, Field, Int, InputType } from 'type-graphql';
+import { RecipeProduct } from './recipeProduct';
 
 export enum Status {
-  VALIDATED = "VALIDATED",
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
+  VALIDATED = 'VALIDATED',
+  PENDING = 'PENDING',
+  REJECTED = 'REJECTED',
 }
 
 @Entity()
@@ -28,7 +28,7 @@ export class Recipe extends BaseEntity {
   @Field()
   title: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   @Field()
   description: string;
 
@@ -37,16 +37,12 @@ export class Recipe extends BaseEntity {
   createdAt: Date;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: Status,
     default: Status.PENDING,
   })
   @Field()
   status: Status;
-
-  @Column({ default: "" })
-  @Field()
-  statusReason: string;
 
   @Column()
   @Field()
@@ -60,7 +56,7 @@ export class Recipe extends BaseEntity {
   @Field()
   image: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   @Field()
   content: string;
 
