@@ -126,7 +126,7 @@ const AddRecipesForm = () => {
                 name="difficulty"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel>Niveau de difficulté :</FormLabel>
+                    <FormLabel>Niveau de difficulté</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}

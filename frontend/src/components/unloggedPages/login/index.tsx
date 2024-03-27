@@ -58,7 +58,7 @@ export const LoginForm = ({ setAuthAction }: LoginFormProps) => {
   return (
     <div className="flex flex-col gap-9">
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-2xl font-semibold">Connectez-vous</h2>
+        <h2 className="text-2xl font-semibold">Connectez-vous !</h2>
         <p className="text-center text-sm text-muted-foreground">
           Entrez vos identifiants pour vous connecter à l'application
         </p>
