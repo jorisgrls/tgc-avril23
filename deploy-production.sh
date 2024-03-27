@@ -1,4 +1,5 @@
 #!/bin/sh
+cd /home/ubuntu/apps/tgc-avril23
 git fetch origin && git reset --hard origin/main && git clean -f -d && \
 docker compose -f docker-compose.production.yml down && \
 docker compose -f docker-compose.production.yml pull && \
