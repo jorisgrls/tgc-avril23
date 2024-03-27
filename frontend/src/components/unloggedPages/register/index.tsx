@@ -82,7 +82,7 @@ export const RegisterForm = ({ setAuthAction }: RegisterFormProps) => {
   return (
     <div className="flex flex-col gap-9">
       <div className="flex flex-col items-center justify-center gap-2">
-        <h2 className="text-2xl font-semibold">Inscrivez-vous</h2>
+        <h2 className="text-2xl font-semibold">Inscrivez-vous !</h2>
         <p className="text-sm text-muted-foreground">
           Renseignez vos informations afin de pouvoir vous inscrire
         </p>
