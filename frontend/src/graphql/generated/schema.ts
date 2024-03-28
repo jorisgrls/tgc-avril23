@@ -109,7 +109,6 @@ export type Recipe = {
   isVegetarian: Scalars['Boolean'];
   recipeProducts: Array<RecipeProduct>;
   status: Scalars['String'];
-  statusReason: Scalars['String'];
   title: Scalars['String'];
   user: User;
 };
@@ -212,7 +211,7 @@ export type GetUserProductsQuery = { __typename?: 'Query', user: { __typename?: 
 export type GetUserRecipesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUserRecipesQuery = { __typename?: 'Query', userRecipes: Array<{ __typename?: 'Recipe', id: number, title: string, status: string, statusReason: string, difficulty: string, description: string }> };
+export type GetUserRecipesQuery = { __typename?: 'Query', userRecipes: Array<{ __typename?: 'Recipe', id: number, title: string, status: string, difficulty: string, description: string }> };
 
 export type LoginMutationVariables = Exact<{
   data: LoginUserInput;
@@ -579,7 +578,6 @@ export const GetUserRecipesDocument = gql`
     id
     title
     status
-    statusReason
     difficulty
     description
   }

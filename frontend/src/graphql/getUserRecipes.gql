@@ -3,7 +3,6 @@ query GetUserRecipes {
     id
     title
     status
-    statusReason
     difficulty
     description
   }
