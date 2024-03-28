@@ -18,6 +18,7 @@ jobs:
   build-and-push-server:
     needs:
       - e2e-tests
+      - integration-tests
     uses: jorisgrls/tgc-avril23/.github/workflows/build-backend.yml@main
     secrets:
       DOCKERHUB_USERNAME: jorisgls
